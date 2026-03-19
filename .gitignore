@@ -2,6 +2,37 @@
 build/
 bin/
 
+# Ignore Visual Studio/CMake build outputs
+build_vs/
+*.obj
+*.pdb
+*.ilk
+*.tlog
+*.lib
+*.exp
+*.log
+*.tmp
+*.exe
+*.dll
+*.vcxproj*
+*.filters
+*.user
+*.suo
+*.idb
+*.ipch
+*.aps
+*.ncb
+*.sdf
+*.opensdf
+*.cache
+*.db
+*.sbr
+*.pch
+*.bak
+*.old
+*.swp
+*.swo
+
 # Ignore all dot folders, with below exceptions
 .*/
 

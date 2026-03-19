@@ -1,3 +1,0 @@
-C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/build_vs/_deps/sdl2-subbuild/CMakeFiles/sdl2-populate.dir
-C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/build_vs/_deps/sdl2-subbuild/CMakeFiles/ALL_BUILD.dir
-C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/build_vs/_deps/sdl2-subbuild/CMakeFiles/ZERO_CHECK.dir
