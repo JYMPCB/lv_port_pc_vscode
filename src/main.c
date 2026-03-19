@@ -25,6 +25,9 @@
 #include <SDL.h>
 
 #include "hal/hal.h"
+#ifdef USE_UI_APP
+  #include "app_ui.h"
+#endif
 
 /*********************
  *      DEFINES
@@ -61,8 +64,11 @@ int main(int argc, char **argv)
   lv_init();
 
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
-  sdl_hal_init(320, 480);
+  sdl_hal_init(1024, 600);
 
+#ifdef USE_UI_APP
+  app_ui_init();
+#else
   /* Run the default demo */
   /* To try a different demo or example, replace this with one of: */
   /* - lv_demo_benchmark(); */
@@ -70,6 +76,7 @@ int main(int argc, char **argv)
   /* - lv_example_label_1(); */
   /* - etc. */
   lv_demo_widgets();
+#endif
 
   while(1) {
     /* Periodically call the lv_task handler.

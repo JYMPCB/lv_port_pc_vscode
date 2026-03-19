@@ -51,13 +51,56 @@ option(LV_USE_FREETYPE "Use freetype library" OFF)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(FetchContent)
+
+set(PROJECT_ROOT_DIR "${PROJECT_SOURCE_DIR}/..")
+set(UI_APP_DIR "${PROJECT_ROOT_DIR}/components/ui_app")
+set(UI_APP_APP_DIR "${UI_APP_DIR}/app")
+set(UI_APP_UI_DIR "${UI_APP_DIR}/ui")
 
 # Set the output path for the executable
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-# Find and include SDL2 library
-find_package(SDL2 REQUIRED)
+# Find SDL2 from system first; if unavailable, fetch and build it locally.
+set(SDL2_LIBS "")
+find_package(SDL2 QUIET CONFIG)
+
+if(TARGET SDL2::SDL2)
+    message(STATUS "Using system SDL2 package")
+    list(APPEND SDL2_LIBS SDL2::SDL2)
+    if(TARGET SDL2::SDL2main)
+        list(APPEND SDL2_LIBS SDL2::SDL2main)
+    endif()
+else()
+    message(STATUS "SDL2 package not found. Fetching SDL2 from source...")
+    set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+    set(SDL_STATIC ON CACHE BOOL "" FORCE)
+    set(SDL_TEST OFF CACHE BOOL "" FORCE)
+
+    FetchContent_Declare(
+        SDL2
+        URL https://github.com/libsdl-org/SDL/archive/refs/tags/release-2.30.9.zip
+    )
+    FetchContent_MakeAvailable(SDL2)
+
+    if(NOT TARGET SDL2::SDL2)
+        message(FATAL_ERROR "SDL2 could not be found or fetched")
+    endif()
+
+    list(APPEND SDL2_LIBS SDL2::SDL2)
+    if(TARGET SDL2::SDL2main)
+        list(APPEND SDL2_LIBS SDL2::SDL2main)
+    endif()
+endif()
+
+set(SDL2_EXTRA_INCLUDE_DIRS "")
+if(DEFINED SDL2_SOURCE_DIR AND EXISTS "${SDL2_SOURCE_DIR}/include")
+    list(APPEND SDL2_EXTRA_INCLUDE_DIRS "${SDL2_SOURCE_DIR}/include")
+endif()
+if(DEFINED SDL2_BINARY_DIR AND EXISTS "${SDL2_BINARY_DIR}/include")
+    list(APPEND SDL2_EXTRA_INCLUDE_DIRS "${SDL2_BINARY_DIR}/include")
+endif()
 
 # Add compile definitions based on the selected options
 add_compile_definitions($<$<BOOL:${LV_USE_DRAW_SDL}>:LV_USE_DRAW_SDL=1>)
@@ -67,10 +110,20 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 
 # Add LVGL subdirectory
 add_subdirectory(lvgl)
-target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
+target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_EXTRA_INCLUDE_DIRS})
 
 set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c)
-set(MAIN_LIBS lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES})
+set(MAIN_LIBS lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBS})
+
+if(EXISTS "${UI_APP_APP_DIR}/app_ui.c")
+    message(STATUS "ui_app integration enabled from: ${UI_APP_DIR}")
+    file(GLOB_RECURSE UI_APP_SOURCES CONFIGURE_DEPENDS
+        "${UI_APP_APP_DIR}/*.c"
+        "${UI_APP_DIR}/assets/**/*.c"
+        "${UI_APP_UI_DIR}/*.c"
+    )
+    list(APPEND MAIN_SOURCES ${UI_APP_SOURCES})
+endif()
 
 # Create the main executable, depending on the FreeRTOS option
 if(USE_FREERTOS)
@@ -143,6 +196,18 @@ endif()
 
 add_executable(main ${MAIN_SOURCES})
 target_compile_definitions(main PRIVATE LV_CONF_INCLUDE_SIMPLE)
+target_include_directories(main PRIVATE ${SDL2_EXTRA_INCLUDE_DIRS})
+if(EXISTS "${UI_APP_APP_DIR}/app_ui.h")
+    target_compile_definitions(main PRIVATE USE_UI_APP=1)
+    target_include_directories(main PRIVATE
+        "${UI_APP_APP_DIR}"
+        "${UI_APP_UI_DIR}"
+        "${UI_APP_UI_DIR}/screens"
+        "${UI_APP_UI_DIR}/widgets"
+        "${UI_APP_UI_DIR}/components"
+        "${UI_APP_UI_DIR}/styles"
+    )
+endif()
 target_link_libraries(main ${MAIN_LIBS})
 
 # On Windows, GUI applications do not show a console by default,
@@ -159,31 +224,40 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Debug mode enabled")
 
-    target_compile_options(lvgl PRIVATE
-        -pedantic-errors
-        -Wall
-        -Wclobbered
-        -Wdeprecated
-        -Wdouble-promotion
-        -Wempty-body
-        -Wextra
-        -Wformat-security
-        -Wmaybe-uninitialized
-        # -Wmissing-prototypes
-        -Wpointer-arith
-        -Wmultichar
-        -Wno-pedantic # ignored for now, we convert functions to pointers for properties table.
-        -Wreturn-type
-        -Wshadow
-        -Wshift-negative-value
-        -Wsizeof-pointer-memaccess
-        -Wtype-limits
-        -Wundef
-        -Wuninitialized
-        -Wunreachable-code
-        -Wfloat-conversion
-        -Wstrict-aliasing
-    )
+    if(MSVC)
+        target_compile_options(lvgl PRIVATE
+            /W4
+            /wd4100
+            /wd4127
+            /wd4204
+        )
+    else()
+        target_compile_options(lvgl PRIVATE
+            -pedantic-errors
+            -Wall
+            -Wclobbered
+            -Wdeprecated
+            -Wdouble-promotion
+            -Wempty-body
+            -Wextra
+            -Wformat-security
+            -Wmaybe-uninitialized
+            # -Wmissing-prototypes
+            -Wpointer-arith
+            -Wmultichar
+            -Wno-pedantic # ignored for now, we convert functions to pointers for properties table.
+            -Wreturn-type
+            -Wshadow
+            -Wshift-negative-value
+            -Wsizeof-pointer-memaccess
+            -Wtype-limits
+            -Wundef
+            -Wuninitialized
+            -Wunreachable-code
+            -Wfloat-conversion
+            -Wstrict-aliasing
+        )
+    endif()
 
 if (ASAN)
     message(STATUS "AddressSanitizer enabled")
