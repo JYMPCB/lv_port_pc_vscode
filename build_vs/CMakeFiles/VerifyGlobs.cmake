@@ -26,7 +26,14 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/*.c")
 set(OLD_GLOB
   "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/screens/ui_home.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_free_btn.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_interval_btn.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_metric_card.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_program_btn.c"
   "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_start_btn.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_stepper_btn.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_stop_btn.c"
+  "C:/Users/JYM-DSN/Willielectrical/lv_port_pc_vscode/../components/ui_app/ui/widgets/willi_training_metrics.c"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

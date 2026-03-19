@@ -3,5 +3,12 @@ C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\src\hal\hal.c;C:\Users\JYM-DS
 C:\Users\JYM-DSN\Willielectrical\components\ui_app\app\app_ui.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\app_ui.obj
 C:\Users\JYM-DSN\Willielectrical\components\ui_app\assets\images\bg_png.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\bg_png.obj
 C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\screens\ui_home.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\ui_home.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_free_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_free_btn.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_interval_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_interval_btn.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_metric_card.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_metric_card.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_program_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_program_btn.obj
 C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_start_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_start_btn.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_stepper_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_stepper_btn.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_stop_btn.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_stop_btn.obj
+C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_training_metrics.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\willi_training_metrics.obj
 C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\src\main.c;C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\build_vs\main.dir\Debug\main.obj

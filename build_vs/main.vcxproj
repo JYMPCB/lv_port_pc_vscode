@@ -345,7 +345,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\app\app_ui.c" />
     <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\assets\images\bg_png.c" />
     <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\screens\ui_home.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_free_btn.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_interval_btn.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_metric_card.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_program_btn.c" />
     <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_start_btn.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_stepper_btn.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_stop_btn.c" />
+    <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\components\ui_app\ui\widgets\willi_training_metrics.c" />
     <ClCompile Include="C:\Users\JYM-DSN\Willielectrical\lv_port_pc_vscode\src\main.c" />
   </ItemGroup>
   <ItemGroup>
